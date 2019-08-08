@@ -1,5 +1,4 @@
 import axios from "axios";
-import { GetParameterResult } from "aws-sdk/clients/ssm";
 import { SSM } from "aws-sdk";
 
 const DC = "us8";
@@ -16,7 +15,7 @@ async function mailchimpAPIKey(): Promise<string> {
 
 const LIST_ID = "79922a588c";
 
-export default async (email, fname, lname) => {
+export default async (email: string, fname: string, lname: string) => {
   const API_URL = `https://${DC}.api.mailchimp.com/3.0/lists/${LIST_ID}/members`;
   try {
     const params = {

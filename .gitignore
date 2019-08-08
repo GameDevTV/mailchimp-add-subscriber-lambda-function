@@ -1,3 +1,7 @@
-.idea
+# package directories
 node_modules
-params.txt
+jspm_packages
+
+# Serverless directories
+.serverless
+npm-debug.log

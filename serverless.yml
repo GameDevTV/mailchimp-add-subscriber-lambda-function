@@ -22,6 +22,11 @@ service: aws-nodejs # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs10.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action: ssm:GetParameter
+      Resource: 
+        - "arn:aws:ssm:${opt:region, self:provider.region}:*:parameter/*"
 
 # you can overwrite defaults here
 #  stage: dev
@@ -57,8 +62,13 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: addSubscriber
+  addSubscriber:
+    handler: index.handler
+    events:
+      - http:
+          path: subscriber
+          method: post
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -111,3 +121,7 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
